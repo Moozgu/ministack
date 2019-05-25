@@ -24,9 +24,9 @@ public class AuthController {
     @PostMapping("/user/register")
     public String register(@ModelAttribute RegisterForm registerForm,
                             Model model){
-        userService.registerUser(registerForm);
-                return "user/register";
+        model.addAttribute("isRegistered",userService.registerUser(registerForm));
+        return "user/register";
 
-        }
+    }
 
 }
