@@ -1,15 +1,9 @@
 package pl.lukaszgilga.ministack.model.form;
 
-
 import lombok.Data;
 
 @Data
-public class RegisterForm {
-
+public class LoginForm {
     private String email;
     private String password;
-    private String nickname;
-
-
-
 }
