@@ -3,12 +3,15 @@ package pl.lukaszgilga.ministack.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.lukaszgilga.ministack.model.form.LoginForm;
 import pl.lukaszgilga.ministack.model.form.RegisterForm;
 import pl.lukaszgilga.ministack.model.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 public class AuthController {
@@ -23,8 +26,12 @@ public class AuthController {
     }
 
     @PostMapping("/user/register")
-    public String register(@ModelAttribute RegisterForm registerForm,
+    public String register(@ModelAttribute("registerForm") @Valid RegisterForm registerForm,
+                            BindingResult bindingResult,
                             Model model){
+        if (bindingResult.hasErrors()){
+            return "user/register";
+        }
         boolean isRegistered = userService.registerUser(registerForm);
         if(isRegistered){
             return "redirect:/user/login";
@@ -47,7 +54,7 @@ public class AuthController {
     public String login(@ModelAttribute LoginForm loginForm,
                         Model model){
         if(userService.loginUser(loginForm)){
-            return "redirect:/user/mainpage";
+            return "redirect:/user/homepage";
         }
         model.addAttribute("isLogged",false);
         return "user/login";
