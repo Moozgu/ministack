@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <center>
+        <div style="width: 60%; margin-top: 5%">
+            <h1>Rejestracja na blogu numero uno</h1>
+            <strong>Plytkie wody</strong>
+
+            <br/><br/>
+
+            <form style="width: 70%" th:if="${test == null}" action ="/user/register" method = "post" th:object="${registerForm}">
+                Adres Email:    <input th:field="*{email}" type ="text"><br/>
+                Haslo:          <input th:field="*{password}" type ="text"><br/>
+                Nickname:       <input th:field="*{nickname}" type ="text"><br/>
+            <input type="submit" value ="Register">
+
+            </form>
+        </div>
+    </center>
+
+
+</body>
+</html>
