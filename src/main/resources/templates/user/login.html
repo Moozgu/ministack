@@ -7,33 +7,36 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<left>
-    <div style="width: 60%; margin-top: 5%; margin-left: 10%">
-        <h1>Login</h1>
-        <strong>Come in, don't be shy</strong>
+    <th:block th:replace="user/inc/nav :: nav"></th:block>
+    <left>
+        <div style="width: 60%; margin-top: 5%; margin-left: 10%">
+            <h1>Login</h1>
+            <strong>Come in, don't be shy</strong>
 
-        <br/><br/>
+            <br/><br/>
 
-        <div th:if="${isLogged !=null && !isLogged}" class="alert alert-danger" role="alert">
-            Login failed, incorrect email or password
+            <div th:if="${isLogged !=null && !isLogged}" class="alert alert-danger" role="alert">
+                Login failed, incorrect email or password
+            </div>
+
+            <form style="width: 70%" action ="/user/login" method = "post" th:object="${loginForm}">
+                <div class="form-group">
+                    <label for="exampleInputEmail"> Email:</label>
+                    <input th:field="*{email}" type ="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">Email will be hidden on the forum</small>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                    <small id="passwordHelp" class="form-text text-muted">Like, don't share it with people Yo</small>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+                &nbsp; or &nbsp;
+                <a href="/user/register" class="btn btn-primary">Register</a>
+
+            </form>
         </div>
-
-        <form style="width: 70%" action ="/user/login" method = "post" th:object="${loginForm}">
-            <div class="form-group">
-                <label for="exampleInputEmail"> Email:</label>
-                <input th:field="*{email}" type ="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">Email will be hidden on the forum</small>
-            </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input th:field="*{password}" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                <small id="passwordHelp" class="form-text text-muted">Like, don't share it with people Yo</small>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-
-        </form>
-    </div>
-</left>
+    </left>
 
 
 </body>

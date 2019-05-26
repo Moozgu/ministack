@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
+    <th:block th:replace="user/inc/nav :: nav"></th:block>
+
     <left>
         <div style="width: 60%; margin-top: 5%; margin-left: 10%">
             <h1>Register a new user</h1>
@@ -38,6 +40,8 @@
                     <small id="nicknameHelp" class="form-text text-muted">This WILL be visible</small>
                 </div>
                 <button type="submit" class="btn btn-primary">Register</button>
+                &nbsp; or &nbsp;
+                <a href="/user/login" class="btn btn-primary">Login</a>
 
             </form>
         </div>

@@ -2,6 +2,8 @@ package pl.lukaszgilga.ministack.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.lukaszgilga.ministack.model.entity.UserEntity;
@@ -13,10 +15,13 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
+@Scope (scopeName = "singleton")
 public class UserService {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SessionService sessionService;
 
 
     //Transactional joins everything below into a single indivisible method.
@@ -43,9 +48,13 @@ public class UserService {
         if(!user.isPresent()){
             return false;
         }
-
-        return getBCrypt().matches(loginForm.getPassword(),user.get().getPassword());
-
+        boolean passwordMatches = getBCrypt().matches(loginForm.getPassword(),user.get().getPassword());
+        if(passwordMatches){
+            sessionService.setLogin(true);
+            sessionService.setUserId(user.get().getId());
+            sessionService.setNickname(user.get().getNickname());
+        }
+        return passwordMatches;
     }
     @Bean
     public BCryptPasswordEncoder getBCrypt(){

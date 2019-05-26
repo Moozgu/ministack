@@ -54,7 +54,7 @@ public class AuthController {
     public String login(@ModelAttribute LoginForm loginForm,
                         Model model){
         if(userService.loginUser(loginForm)){
-            return "redirect:/user/homepage";
+            return "redirect:/user/dashboard";
         }
         model.addAttribute("isLogged",false);
         return "user/login";
