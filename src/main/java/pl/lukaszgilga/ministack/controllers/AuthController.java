@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import pl.lukaszgilga.ministack.model.form.LoginForm;
 import pl.lukaszgilga.ministack.model.form.RegisterForm;
+import pl.lukaszgilga.ministack.model.service.SessionService;
 import pl.lukaszgilga.ministack.model.service.UserService;
 
 import javax.validation.Valid;
@@ -18,6 +19,8 @@ public class AuthController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    SessionService sessionService;
 
     @GetMapping("/user/register")
     public String register(Model model){
@@ -58,6 +61,12 @@ public class AuthController {
         }
         model.addAttribute("isLogged",false);
         return "user/login";
+    }
+
+    @GetMapping("/user/logout")
+    public String logout(Model model){
+        sessionService.logoutClean();
+        return "redirect:/user/login";
     }
 
 }
