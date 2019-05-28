@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.lukaszgilga.ministack.model.form.LoginForm;
 import pl.lukaszgilga.ministack.model.form.RegisterForm;
 import pl.lukaszgilga.ministack.model.service.SessionService;
@@ -64,8 +65,9 @@ public class AuthController {
     }
 
     @GetMapping("/user/logout")
-    public String logout(Model model){
+    public String logout(RedirectAttributes redirectAttributes){
         sessionService.logoutClean();
+        redirectAttributes.addFlashAttribute("info","You have been logged out");
         return "redirect:/user/login";
     }
 

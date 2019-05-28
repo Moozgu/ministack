@@ -19,6 +19,7 @@ public class UserEntity {
     private String nickname;
     //@Column(name = "Password_user") --- Przypisanie nazwy kolumny do zmiennej
     private String password;
+//    private boolean isAdmin;
 
     public UserEntity(){}
 
