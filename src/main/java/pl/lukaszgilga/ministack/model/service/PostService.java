@@ -27,6 +27,9 @@ public class PostService {
         postRepository.save(post);
 
     }
+    public void deletePost(PostEntity postEntity){
+        postRepository.deleteById(postEntity.getId());
+    }
     public Iterable<PostEntity> getAllPosts(){
         return postRepository.findTop10ByOrderByIdDesc();
     }

@@ -53,6 +53,7 @@ public class UserService {
             sessionService.setLogin(true);
             sessionService.setUserId(user.get().getId());
             sessionService.setNickname(user.get().getNickname());
+            sessionService.setAdmin(user.get().isAdmin());
         }
         return passwordMatches;
     }
