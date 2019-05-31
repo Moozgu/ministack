@@ -37,10 +37,11 @@ public class PostController {
     }
     @RequestMapping(value = "user/delete/{id}")
     private String deletePost(@PathVariable(name = "id") String id){
-        System.out.println("Post_ID  : "+id);
-        PostEntity post = new PostEntity();
-        post.setId(Integer.parseInt(id));
-        postService.deletePost(post);
+        if(sessionService.isAdmin()) {
+            PostEntity post = new PostEntity();
+            post.setId(Integer.parseInt(id));
+            postService.deletePost(post);
+        }
         return "redirect:/user/dashboard";
     }
 
