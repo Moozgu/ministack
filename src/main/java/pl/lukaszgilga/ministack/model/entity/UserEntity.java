@@ -9,6 +9,13 @@ import javax.persistence.*;
 @Table(name = "user")
 @Data
 public class UserEntity {
+
+    public enum AccountType{
+        ADMIN,
+        MODERATOR,
+        USER;
+    }
+
     @Id
     @GeneratedValue
     private int id;
@@ -17,8 +24,10 @@ public class UserEntity {
     //@Column(name = "Password_user") --- Przypisanie nazwy kolumny do zmiennej
     private String password;
 
-    @Column(name = "admin")
-    private boolean isAdmin;
+    @Column(name ="account_type")
+    @Enumerated(EnumType.STRING)
+    private AccountType accountType;
+
 
     public UserEntity(){}
 

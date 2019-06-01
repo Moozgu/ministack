@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name ="post" )
@@ -19,6 +20,9 @@ public class PostEntity {
     private LocalDateTime creationTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")  // wskazujemy kolumne do której wrzucamy obiekt UserEntiy
+    @JoinColumn(name = "user_id")
     private UserEntity user;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<CommentEntity> comments;
 }

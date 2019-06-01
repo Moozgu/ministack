@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.lukaszgilga.ministack.model.entity.PostEntity;
+import pl.lukaszgilga.ministack.model.entity.UserEntity;
 import pl.lukaszgilga.ministack.model.form.PostForm;
 import pl.lukaszgilga.ministack.model.service.PostService;
 import pl.lukaszgilga.ministack.model.service.SessionService;
@@ -35,14 +36,19 @@ public class PostController {
         redirectAttributes.addFlashAttribute("info","Added new post");
         return "redirect:/user/dashboard";
     }
-    @RequestMapping(value = "user/delete/{id}")
-    private String deletePost(@PathVariable(name = "id") String id){
-        if(sessionService.isAdmin()) {
-            PostEntity post = new PostEntity();
-            post.setId(Integer.parseInt(id));
-            postService.deletePost(post);
+    @GetMapping("/post/delete/{id}")
+    public String deletePost(@PathVariable("id") int id){
+
+        if(sessionService.getAccountType() == UserEntity.AccountType.ADMIN) {
+            postService.deletePost(id);
         }
         return "redirect:/user/dashboard";
+    }
+    @GetMapping("/post/details/{id}")
+    public String details(@PathVariable("id") int id,
+                          Model model){
+        model.addAttribute("post", postService.getPostById(id));
+        return "post/details_post";
     }
 
 

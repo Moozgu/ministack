@@ -19,12 +19,11 @@
 
                 <h5 class="card-header"th:text="${post.getTitle()}"></h5>
                 <div class="card-body">
-                    <div th:if="${admin}" class="float-right">
-                        <a th:href="@{delete/__${post.getId()}__}" class="btn btn-danger">Delete</a>
-                    </div>
+
                     <h5 class="card-title" th:text="${post.getUser().getNickname()}"></h5>
                     <p class="card-text" th:text="${post.getContent()}"></p>
-                    <a href="#" class="btn btn-primary">Comment</a>
+                    <a th:href="${'/post/details/' + post.getId()}" class="btn btn-primary">Comment</a>
+                    <a th:if="${userSession.getAccountType().name() == 'ADMIN'}" th:href="${'/post/delete/' + post.getId()}" class="btn btn-danger">Delete</a>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted" >Post added on : <strong th:text="${post.getCreationTime()}" ></strong></small>

@@ -24,7 +24,6 @@ public class DashboardController {
             return "redirect:/user/login";
         }
         model.addAttribute("posts",postService.getAllPosts());
-        model.addAttribute("admin",sessionService.isAdmin());
         return "user/dashboard";
     }
 }

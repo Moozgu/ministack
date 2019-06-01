@@ -7,6 +7,8 @@ import pl.lukaszgilga.ministack.model.entity.UserEntity;
 import pl.lukaszgilga.ministack.model.form.PostForm;
 import pl.lukaszgilga.ministack.model.repository.PostRepository;
 
+import java.util.Optional;
+
 @Service
 public class PostService {
     @Autowired
@@ -27,10 +29,14 @@ public class PostService {
         postRepository.save(post);
 
     }
-    public void deletePost(PostEntity postEntity){
-        postRepository.deleteById(postEntity.getId());
+    public void deletePost(int id){
+        postRepository.deleteById(id);
     }
     public Iterable<PostEntity> getAllPosts(){
         return postRepository.findTop10ByOrderByIdDesc();
+    }
+
+    public PostEntity getPostById(int id){
+        return postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 }
