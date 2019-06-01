@@ -2,9 +2,12 @@ package pl.lukaszgilga.ministack.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.lukaszgilga.ministack.model.entity.CommentEntity;
 import pl.lukaszgilga.ministack.model.entity.PostEntity;
 import pl.lukaszgilga.ministack.model.entity.UserEntity;
+import pl.lukaszgilga.ministack.model.form.CommentForm;
 import pl.lukaszgilga.ministack.model.form.PostForm;
+import pl.lukaszgilga.ministack.model.repository.CommentRepository;
 import pl.lukaszgilga.ministack.model.repository.PostRepository;
 
 import java.util.Optional;
@@ -15,6 +18,8 @@ public class PostService {
     SessionService sessionService;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
 
 
@@ -38,5 +43,24 @@ public class PostService {
 
     public PostEntity getPostById(int id){
         return postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
+    public void addComment(CommentForm commentForm, int postId, int userId) {
+        PostEntity postEntity = new PostEntity();
+        postEntity.setId(postId);
+
+        UserEntity userEntity = new UserEntity();
+        userEntity.setId(userId);
+
+        CommentEntity commentEntity = new CommentEntity();
+        commentEntity.setAuthor(userEntity);
+        commentEntity.setPost(postEntity);
+        commentEntity.setComment(commentForm.getComment());
+
+        commentRepository.save(commentEntity);
+    }
+
+    public Object getAllCommentsByPost(int id) {
+        return commentRepository.findCommentsByPostId(id);
     }
 }

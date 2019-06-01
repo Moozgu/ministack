@@ -24,26 +24,27 @@
         </div>
         <br/>
 
-
+        <th:block th:each="comment: ${comments}">
         <div style="max-height: 500px">
             <div class="card">
                 <div class="card-body">
-                    <p class="card-text"  th:text="tresc"></p>
+                    <p class="card-text"  th:text="${comment.getComment()}"></p>
                 </div>
                 <div class="card-footer">
-                    <small class="text-muted">Data dodania i autor: <strong th:text="${post.getCreationTime()}"></strong></small>
+                    <small class="text-muted">Add time and author <strong th:text="${comment.getCreationTime()} + ' ' + ${comment.getAuthor().getNickname()}"></strong></small>
                 </div>
             </div>
         </div>
+        </th:block>
 
         <br/>
 
         <div style="width: 100%" class="jumbotron">
-            <form action="/comment/add" method="post">
+            <form th:action="${'/comment/add/' + post.getId()}" method="post" th:object="${commentForm}">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Podaj komentarz"></input>
+                    <input th:field="*{comment}" class="form-control" type="text" placeholder="Add comment"></input>
                 </div>
-                <button type="submit" class="btn btn-primary">Dodaj komentarz</button>
+                <button type="submit" class="btn btn-primary">Comment</button>
             </form>
         </div>
     </div>

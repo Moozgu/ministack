@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.lukaszgilga.ministack.model.entity.PostEntity;
 import pl.lukaszgilga.ministack.model.entity.UserEntity;
+import pl.lukaszgilga.ministack.model.form.CommentForm;
 import pl.lukaszgilga.ministack.model.form.PostForm;
 import pl.lukaszgilga.ministack.model.service.PostService;
 import pl.lukaszgilga.ministack.model.service.SessionService;
@@ -36,6 +37,7 @@ public class PostController {
         redirectAttributes.addFlashAttribute("info","Added new post");
         return "redirect:/user/dashboard";
     }
+
     @GetMapping("/post/delete/{id}")
     public String deletePost(@PathVariable("id") int id){
 
@@ -44,12 +46,28 @@ public class PostController {
         }
         return "redirect:/user/dashboard";
     }
+
     @GetMapping("/post/details/{id}")
     public String details(@PathVariable("id") int id,
                           Model model){
         model.addAttribute("post", postService.getPostById(id));
+        model.addAttribute("comments", postService.getAllCommentsByPost(id));
+        model.addAttribute("commentForm", new CommentForm());
         return "post/details_post";
     }
+
+    @PostMapping("comment/add/{postId}")
+    public String addComment(@ModelAttribute CommentForm commentForm,
+                             @PathVariable("postId") int postId){
+        if(!sessionService.isLogin()){
+            return "redirect:/user/login";
+        }
+        postService.addComment(commentForm, postId,sessionService.getUserId());
+        return "redirect:/post/details/" + postId;
+
+    }
+
+
 
 
 }
