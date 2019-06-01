@@ -69,4 +69,8 @@ public class PostService {
     }
 
 
+    public Iterable<PostEntity> getPostsByQuery(String query) {
+        return postRepository.findPostsByQuery(query);
+
+    }
 }
