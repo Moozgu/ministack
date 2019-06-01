@@ -37,9 +37,13 @@ public class PostService {
     public void deletePost(int id){
         postRepository.deleteById(id);
     }
+    public void deleteComment(int id) {
+        commentRepository.deleteById(id);
+    }
     public Iterable<PostEntity> getAllPosts(){
         return postRepository.findTop10ByOrderByIdDesc();
     }
+
 
     public PostEntity getPostById(int id){
         return postRepository.findById(id).orElseThrow(IllegalArgumentException::new);
@@ -63,4 +67,6 @@ public class PostService {
     public Object getAllCommentsByPost(int id) {
         return commentRepository.findCommentsByPostId(id);
     }
+
+
 }

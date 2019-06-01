@@ -2,10 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
+    <title th:text="${post.getTitle()}"></title>
+    <link rel="stylesheet" type="text/css" href="/background.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
+
 <body>
 <th:block th:replace="user/inc/nav :: nav"></th:block>
 
@@ -31,6 +32,7 @@
                     <p class="card-text"  th:text="${comment.getComment()}"></p>
                 </div>
                 <div class="card-footer">
+                    <a th:if="${userSession.getAccountType().name() == 'ADMIN'}" th:href="${'/comment/delete/' + post.getId() + '/' + comment.getId()}" class="btn btn-danger">Delete</a>
                     <small class="text-muted">Add time and author <strong th:text="${comment.getCreationTime()} + ' ' + ${comment.getAuthor().getNickname()}"></strong></small>
                 </div>
             </div>
@@ -39,7 +41,7 @@
 
         <br/>
 
-        <div style="width: 100%" class="jumbotron">
+        <div style="width: 100%" class="jumbotron bg-light">
             <form th:action="${'/comment/add/' + post.getId()}" method="post" th:object="${commentForm}">
                 <div class="form-group">
                     <input th:field="*{comment}" class="form-control" type="text" placeholder="Add comment"></input>

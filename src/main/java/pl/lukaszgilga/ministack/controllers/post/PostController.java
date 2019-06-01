@@ -47,6 +47,17 @@ public class PostController {
         return "redirect:/user/dashboard";
     }
 
+    @GetMapping("/comment/delete/{postId}/{id}")
+    public String deleteComment(@PathVariable("postId") int postId,
+            @PathVariable("id") int id){
+
+        if(sessionService.getAccountType() == UserEntity.AccountType.ADMIN) {
+            postService.deleteComment(id);
+        }
+        return "redirect:/post/details/" + postId;
+    }
+
+
     @GetMapping("/post/details/{id}")
     public String details(@PathVariable("id") int id,
                           Model model){
