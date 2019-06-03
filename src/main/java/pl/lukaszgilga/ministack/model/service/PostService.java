@@ -2,6 +2,7 @@ package pl.lukaszgilga.ministack.model.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.lukaszgilga.ministack.model.dto.PostDto;
 import pl.lukaszgilga.ministack.model.entity.CommentEntity;
 import pl.lukaszgilga.ministack.model.entity.PostEntity;
 import pl.lukaszgilga.ministack.model.entity.UserEntity;
@@ -33,6 +34,9 @@ public class PostService {
 
         postRepository.save(post);
 
+    }
+    public PostEntity addPostDto(PostDto postDto) {
+        return postRepository.save(PostDto.convertToEntity(postDto));
     }
     public void deletePost(int id){
         postRepository.deleteById(id);
@@ -73,4 +77,10 @@ public class PostService {
         return postRepository.findPostsByQuery(query);
 
     }
+
+    public Optional<PostEntity> getPostOptional(int id) {
+        return postRepository.findById(id);
+    }
+
+
 }

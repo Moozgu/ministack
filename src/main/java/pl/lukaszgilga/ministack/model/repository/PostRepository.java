@@ -8,12 +8,12 @@ import java.util.List;
 
 public interface PostRepository extends CrudRepository<PostEntity, Integer> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM post ORDER BY id DESC LIMIT 10")
+    @Query(nativeQuery = true, value = "SELECT * FROM `post` ORDER BY id DESC LIMIT 10")
     Iterable<PostEntity> findTop10ByOrderByIdDesc();
 
-    @Query(nativeQuery = true, value = "SELECT * FROM post WHERE user_id = ?1")
+    @Query(nativeQuery = true, value = "SELECT * FROM `post` WHERE user_id = ?1")
     List<PostEntity> findAllUserPost(int userId);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM post WHERE title LIKE ?1")
+    @Query(nativeQuery = true, value = "SELECT * FROM `post` WHERE title LIKE ?1")
     Iterable<PostEntity> findPostsByQuery(String query);
 }

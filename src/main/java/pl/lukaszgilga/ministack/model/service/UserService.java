@@ -57,6 +57,9 @@ public class UserService {
         }
         return passwordMatches;
     }
+    public boolean userIdCheck(int id){
+        return userRepository.existsByIdSql(id);
+    }
     @Bean
     public BCryptPasswordEncoder getBCrypt(){
         return new BCryptPasswordEncoder();

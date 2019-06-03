@@ -1,5 +1,6 @@
 package pl.lukaszgilga.ministack.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import pl.lukaszgilga.ministack.model.form.RegisterForm;
 
@@ -19,13 +20,17 @@ public class UserEntity {
     @Id
     @GeneratedValue
     private int id;
+
+    @JsonIgnore
     private String email;
     private String nickname;
-    //@Column(name = "Password_user") --- Przypisanie nazwy kolumny do zmiennej
+
+    @JsonIgnore
     private String password;
 
     @Column(name ="account_type")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private AccountType accountType;
 
 
